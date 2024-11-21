@@ -12,21 +12,24 @@ import home3_3 from '../../assets/image/home/home_3_3.svg';
 import home4_4 from '../../assets/image/home/home_4_4.svg';
 import home5_5 from '../../assets/image/home/home_5_5.svg';
 
-const RecommendSection = ({ title, type }) => {
-  const recommendedItems = [
-    { title: '양파', icon: home1, path: '/onion' },
-    { title: '배추', icon: home2, path: '/cabbage' },
-    { title: '토마토', icon: home3, path: '/tomato' },
-    { title: '당근', icon: home4, path: '/carrot' },
-  ];
 
-  const rejectedItems = [
-    { title: '작아요', icon: home1_1, path: '/small' },
-    { title: '색이 변했어요', icon: home2_2, path: '/color-changed' },
-    { title: '울퉁불퉁해요', icon: home3_3, path: '/bumpy' },
-    { title: '상처났어요', icon: home4_4, path: '/bruised' },
-    { title: '모양이 달라요', icon: home5_5, path: '/different-shape' },
-  ];
+const recommendedItems = [
+  { title: '양파', icon: home1, path: '/onion' },
+  { title: '배추', icon: home2, path: '/cabbage' },
+  { title: '토마토', icon: home3, path: '/tomato' },
+  { title: '당근', icon: home4, path: '/carrot' },
+];
+
+const rejectedItems = [
+  { title: '작아요', icon: home1_1, path: '/small' },
+  { title: '색이 변했어요', icon: home2_2, path: '/color-changed' },
+  { title: '울퉁불퉁해요', icon: home3_3, path: '/bumpy' },
+  { title: '상처났어요', icon: home4_4, path: '/bruised' },
+  { title: '모양이 달라요', icon: home5_5, path: '/different-shape' },
+];
+
+const RecommendSection = ({ title, type }) => {
+
 
   const items = type === 'recommended' ? recommendedItems : rejectedItems;
 
