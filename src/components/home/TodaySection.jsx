@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import LocationIcon from '../../assets/image/home/location.png'; // 경로에 맞게 아이콘을 추가하세요.
-import SandwichImage from '../../assets/image/home/sandwich.png'; // 샌드위치 이미지 추가.
+import LocationIcon from '../../assets/image/home/location.png';
+import SandwichImage from '../../assets/image/home/sandwich.png';
 
 const TodaySection = () => {
   return (
@@ -9,17 +9,16 @@ const TodaySection = () => {
       <HeaderText>오늘의 농담식당</HeaderText>
       <LocationSection>
         <Icon src={LocationIcon} alt="location_icon" />
-        <SubText>모먼트 강남</SubText>
+        <SubText>모먼트</SubText>
       </LocationSection>
       <TodayMenuCard>
         <TodayTextSection>
           <MainText>
-            서울에서 <Highlighted>전라남도</Highlighted> 무안 <Highlighted>양파</Highlighted>를 즐겨요!
+            용인에서 <Highlighted>전라남도</Highlighted><br/> 무안 <Highlighted>양파</Highlighted>를 즐겨요!
           </MainText>
-          <Description>무안 양파로 양파잼을 만들고, 샌드위치에 활용했어요.</Description>
+          <Description>무안 양파로 양파잼을 만들고,<br/>샌드위치에 활용했어요.</Description>
         </TodayTextSection>
         <TodayImageSection>
-          <PriceTag>7,500원 (2조각)</PriceTag>
           <Image src={SandwichImage} alt="sandwich" />
         </TodayImageSection>
       </TodayMenuCard>
@@ -61,21 +60,21 @@ const TodayMenuCard = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #ffa500;
     border-radius: 8px;
     margin-top: 16px;
     width: 100%;
     height: 180px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: #FFF0DA;
 `;
 
 const TodayTextSection = styled.div`
-    width: 48%;
+    width: 60%;
     padding: 14px;
 `;
 
 const MainText = styled.p`
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 500;
     color: #323335;
     line-height: 1.4;
@@ -99,17 +98,17 @@ const TodayImageSection = styled.div`
     height: 100%;
 `;
 
-const PriceTag = styled.div`
-    position: absolute;
-    top: 12px;
-    right: 5px;
-    font-size: 12px;
-    color: #ffa500;
-    background: #fdf2e9;
-    padding: 8px 10px;
-    border: 1px solid #ffa500;
-    border-radius: 8px;
-`;
+// const PriceTag = styled.div`
+//     position: absolute;
+//     top: 12px;
+//     right: 5px;
+//     font-size: 12px;
+//     color: #ffa500;
+//     background: #fdf2e9;
+//     padding: 8px 10px;
+//     border: 1px solid #ffa500;
+//     border-radius: 8px;
+// `;
 
 const Image = styled.img`
     width: 100%;
