@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import HomeBanner from '../../assets/image/home/homeBanner.png';
+import HomeBanner from '../../assets/image/home/banner1.png';
 import TodaySection from './TodaySection.jsx';
 import RecommendSection from './RecommendSection.jsx';
 import Banner from '../../assets/image/home/banner2.png';
