@@ -1,7 +1,9 @@
+import SalesDetailScreen from '../../components/sale/saleDetail/SalesDetailScreen';
+
 const SalesDetailPage = () => {
   return (
     <div>
-      <h1>SalesDetailPage</h1>
+        <SalesDetailScreen />
     </div>
   );
 }
