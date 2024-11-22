@@ -4,7 +4,7 @@ import Map from '../../apis/kakao/Map.jsx';
 import LocationSection from './LocationSection.jsx';
 import RestaurantList from './RestaurantList.jsx';
 import CustomTabs from '../common/CustomTabs.jsx'; // 분리된 컴포넌트 import
-import restaurants  from '../../constants/restaurants.js';
+import restaurants  from '../../apis/mock/restaurants.js';
 
 
 const RestaurantsListScreen = () => {

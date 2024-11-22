@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import markerImage from '../../assets/image/restaurant/custom_marker.png'; // 커스텀 마커 이미지 경로
-import restaurants from '../../constants/restaurants.js';
+import restaurants from '../mock/restaurants.js';
 
 const markersData = [
     { lat: 37.3501638, lng: 127.0722692, title: 'Location 1' },
