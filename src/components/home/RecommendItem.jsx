@@ -20,7 +20,7 @@ const ItemCard = styled.div`
   width: 85px;
   max-width: 85px;
   height: 110px;
-  background-color: #EDEDED;
+  background-color: #FFF0DA;
   border-radius: 8px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   justify-content: center;
