@@ -4,12 +4,12 @@ import GlobalStyle from './style/GlobalStyle.js';
 
 
 function App() {
-  return (
-    <>
-      <GlobalStyle />
-      <RouterProvider router={router} />
-    </>
-  );
+    return (
+        <>
+            <GlobalStyle />
+            <RouterProvider router={router} />
+        </>
+    );
 }
 
 
