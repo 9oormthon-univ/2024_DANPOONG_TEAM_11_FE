@@ -10,7 +10,9 @@ const HomeScreen = () => {
     return (
         <HomeScreenContainer>
             <ImageSection>
-                <Image src={HomeBanner} alt="home_banner"/>
+                <a href="https://www.instagram.com/nongdam_friends/" target="_blank" rel="noopener noreferrer">
+                    <Image src={HomeBanner} alt="home_banner"/>
+                </a>
             </ImageSection>
             <RecommendContainer>
                 <TodaySection/>
@@ -21,37 +23,37 @@ const HomeScreen = () => {
             <HomeReviewSection title={"판매자 후기"} emoji={"👨🏻‍🌾"} reviews={BuyerReviewItems}/>
             <HomeReviewSection title={"구매자 후기"} emoji={"👩🏻‍🍳"} reviews={SellerReviewItems}/>
         </HomeScreenContainer>
-    );
+);
 };
 
 export default HomeScreen;
 
 const HomeScreenContainer = styled.div`
-    overflow-y: auto; // 필수~
-    align-items: center;
-    margin-bottom: 100px;
+overflow-y: auto; // 필수~
+align-items: center;
+margin-bottom: 100px;
 `;
 
 const ImageSection = styled.div`
-    width: 100%;
-    padding-top: 50px;
+width: 100%;
+padding-top: 50px;
 `;
 
 const Image = styled.img`
-    width: 100%;
-    height: auto;
-    object-fit: cover;
+width: 100%;
+height: auto;
+object-fit: cover;
 `;
 
 const RecommendContainer = styled.div`
-    width: 100%;
-    padding: 20px;
+width: 100%;
+padding: 20px;
 `;
 
 const BannerImage = styled.img`
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    margin-top: 10px;
-    margin-bottom: 20px;
+width: 100%;
+height: auto;
+object-fit: cover;
+margin-top: 10px;
+margin-bottom: 20px;
 `;
