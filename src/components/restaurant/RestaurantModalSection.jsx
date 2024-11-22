@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import Modal from '../common/RestaurantModal.jsx';
 import RightButton from '../../assets/image/restaurant/right.png';
 
-const RestaurantModalSection = ({ description, name, image1, image2, menu, guide}) => {
+const RestaurantModalSection = ({farmProduce, mainMenuImage, menu, name, image1, image2, guide}) => {
     const [activeModal, setActiveModal] = useState(null);
 
     const handleOpenModal = (type) => {
@@ -18,35 +18,44 @@ const RestaurantModalSection = ({ description, name, image1, image2, menu, guide
         <Container>
             <SectionTitle>상세설명</SectionTitle>
             <MenuSection onClick={() => handleOpenModal('description')}>
-                <Image src={image1} />
-                <Description>{description}</Description>
-                <ButtonImage src={RightButton} />
+                <Image src={image1} alt="menu image" />
+                <Description>
+                    <TextLine>
+                        <Highlighted>{menu[0].farmProduce}</Highlighted>
+                        <span>(으)로 만든</span>
+                    </TextLine>
+                    <MenuName>{menu[0].name}</MenuName>
+                </Description>
+                <ButtonImage src={RightButton} alt="right button" />
             </MenuSection>
             <InfoSection>
-                <OtherMenu onClick={() => handleOpenModal('menu')}>{name}의 <br /> 다른메뉴</OtherMenu>
+                <OtherMenu onClick={() => handleOpenModal('menu')}>{name}의 <br/> 다른메뉴</OtherMenu>
                 <Guide onClick={() => handleOpenModal('guide')}>안내사항</Guide>
             </InfoSection>
 
             {/* 모달 창 */}
             <Modal isOpen={activeModal === 'description'} onClose={handleCloseModal}>
                 <ModalContent>
-                    <ModalImage src={image2} />
-                    <Divider />
-                    <ModalText>{description}</ModalText>
+                    <ModalImage src={mainMenuImage}/>
+                    <Divider/>
+                    <ModalText>
+                        <MainDescription>{menu[0].mainDescription}</MainDescription>
+                        <SubDescription>{menu[0].subDescription}</SubDescription>
+                    </ModalText>
                 </ModalContent>
             </Modal>
 
             <Modal isOpen={activeModal === 'menu'} onClose={handleCloseModal}>
                 <ModalContent>
-                    <ModalImage src={image2} alt="Dish" />
+                    <ModalImage src={image2} alt="Dish"/>
                     <DividerContainer>
-                        <DividerLine />
+                        <DividerLine/>
                         <DividerText>MENU</DividerText>
-                        <DividerLine />
+                        <DividerLine/>
                     </DividerContainer>
                     <OtherMenuSection>
-                        {menu.map((item, index) => (
-                            <MenuItem key={index}>
+                        {menu.slice(1).map((item, index) => (
+                            <MenuItem key={index + 1}>
                                 <span>{item.name}</span>
                                 <span>₩{item.price.toLocaleString()}</span>
                             </MenuItem>
@@ -58,9 +67,7 @@ const RestaurantModalSection = ({ description, name, image1, image2, menu, guide
             <Modal isOpen={activeModal === 'guide'} onClose={handleCloseModal}>
                 <ModalContent>
                     <GuideSection>
-                        {guide.map((info, index) => (
-                            <GuideItem key={index}>{info}</GuideItem>
-                        ))}
+                        <GuideItem>{guide}</GuideItem>
                     </GuideSection>
                 </ModalContent>
             </Modal>
@@ -85,12 +92,11 @@ const SectionTitle = styled.h2`
 `;
 
 const Divider = styled.div`
-  width: 278px;
-  height: 1px;
-  background-color: #FFA726;
+    width: 278px;
+    height: 1px;
+    background-color: #FFA726;
     margin: 15px;
 `;
-
 
 
 const MenuSection = styled.div`
@@ -106,16 +112,39 @@ const MenuSection = styled.div`
     cursor: pointer;
 `;
 const Image = styled.img`
-    border-radius: 100px;
-    width: 50px;
-    height: 50px;
-
+    border-radius: 100px;   
+    width: 60px; 
+    height: 60px; 
+    object-fit: cover; 
 `;
+
 
 const Description = styled.div`
     display: flex;
-    gap: 20px;
+    flex-direction: column; /* 텍스트를 세로로 배치 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+    font-size: 16px;
+    color: #333;
+    gap: 4px; /* 텍스트 간격 */
+`;
+
+const TextLine = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 4px; /* 아이콘과 텍스트 간격 */
+    flex-direction: row;
+`;
+
+const Highlighted = styled.span`
     font-weight: 500;
+    color: #ffa500;
+`;
+
+const MenuName = styled.span`
+    font-weight: 600;
+    font-size: 18px;
+    color: #333;
+    margin-top: 8px; /* 메뉴 이름과 위 텍스트 간격 */
 `;
 
 const ButtonImage = styled.img`
@@ -131,56 +160,70 @@ const InfoSection = styled.div`
 `;
 
 const OtherMenu = styled.div`
-  display: flex;
-  font-size: 16px;
-  font-weight: 500;
-  border-radius: 8px;
-  justify-content: center;
-  align-items: center;
-  line-height: 1.5rem;
-  width: 50%;
-  height: 110px;
-  background-color: #fff7ec;
-  cursor: pointer;
+    display: flex;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 8px;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.5rem;
+    width: 50%;
+    height: 110px;
+    background-color: #fff7ec;
+    cursor: pointer;
 `;
 
 const Guide = styled.div`
-  display: flex;
-  font-size: 16px;
-  font-weight: 500;
-  width: 50%;
-  height: 110px;
-  background-color: #fff7ec;
-  border-radius: 8px;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
+    display: flex;
+    font-size: 16px;
+    font-weight: 500;
+    width: 50%;
+    height: 110px;
+    background-color: #fff7ec;
+    border-radius: 8px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 `;
 
 // 모달 내용 스타일
 const ModalContent = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 15px;
     gap: 16px;
     align-items: center;
     justify-content: center;
 `;
 
 const ModalImage = styled.img`
-  width: 244px;
-  height: 157px;
+    width: 244px;
+    height: 157px;
     border-radius: 20px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
     object-fit: cover;
 `;
 
 const ModalText = styled.div`
-  font-size: 16px;
-  color: #333;
-    width: 100%;
+    font-size: 16px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start; /* 텍스트를 왼쪽 정렬 */
+    gap: 8px; 
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+`;
+
+const MainDescription = styled.div`
+    font-weight: 500;
+    color: black; /* 일반 텍스트 색상 */
+    //word-break: keep-all; /* 텍스트 줄바꿈 방지 */
+`;
+
+const SubDescription = styled.div`
+    font-weight: normal;
+    color: gray; /* 부가 설명용 텍스트 색상 */
+    line-height: 1.5; /* 줄 간격 */
+    word-break: keep-all; /* 텍스트 줄바꿈 방지 */
 `;
 
 const OtherMenuSection = styled.div`
@@ -196,7 +239,7 @@ const MenuItem = styled.div`
     align-items: center;
     width: 100%;
     font-size: 16px;
-    
+
 `;
 
 const DividerContainer = styled.div`

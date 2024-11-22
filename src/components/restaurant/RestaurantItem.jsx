@@ -1,25 +1,32 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate, useParams } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 
-const RestaurantItem = ({ id, image, name, tags }) => {
-  const nav = useNavigate();
-  return (
-    <RestaurantItemContainer onClick={() => {nav(`/details/restaurant/${id}`);}} >
-      <ImageContainer>
-        <Image src={image} alt={name} />
-      </ImageContainer>
-      <Content>
-        <Name>{name}</Name>
-        <Tags>
-          {tags.map((tag, index) => (
-            <Tag key={index}>{tag}</Tag>
-          ))}
-        </Tags>
-      </Content>
-    </RestaurantItemContainer>
-  );
+const RestaurantItem = ({id, image, name, address, farmProduce, menuName}) => {
+    const nav = useNavigate();
+
+    const addressParts = address.split(' '); // 공백으로 나누기
+    const province = addressParts[0] || ''; // ex) "경기도"
+    const city = addressParts[1] || ''; // ex) "용인시"
+    const filteredAddress = `${province} ${city}`; // ex) "경기도 용인시"
+
+    return (
+        <RestaurantItemContainer onClick={() => {
+            nav(`/details/restaurant/${id}`);
+        }}>
+            <ImageContainer>
+                <Image src={image} alt={name}/>
+            </ImageContainer>
+            <Content>
+                <Name>{name}</Name>
+                <Tags>
+                    <Tag>{filteredAddress}</Tag>
+                    <Tag>{farmProduce}</Tag>
+                    <Tag>{menuName}</Tag>
+                </Tags>
+            </Content>
+        </RestaurantItemContainer>
+    );
 };
 
 export default RestaurantItem;

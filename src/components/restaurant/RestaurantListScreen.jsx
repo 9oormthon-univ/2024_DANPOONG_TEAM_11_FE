@@ -26,7 +26,7 @@ const RestaurantsListScreen = () => {
                         </MapContainer>
                     </>
                 )}
-                {activeTab === 1 && <RestaurantList restaurants={restaurants} />}
+                {activeTab === 1 && <RestaurantList />}
             </TabContent>
         </ScreenContainer>
     );
