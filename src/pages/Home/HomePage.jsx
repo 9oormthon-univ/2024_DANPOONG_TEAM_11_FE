@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import HomeScreen from '../../components/home/HomeScreen.jsx';
 
 const HomePage = () => {
   return (
     <HomeContainer>
-      <p>home</p>
+      <HomeScreen />
     </HomeContainer>
   );
 }

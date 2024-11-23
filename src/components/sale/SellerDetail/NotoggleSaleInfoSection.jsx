@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const NotoggleSaleInfoSection = () => {
+const NotoggleSaleInfoSection = ({name, address, representative, phoneNumber}) => {
     return (
         <SectionContainer>
             <SectionHeader>
@@ -10,19 +10,19 @@ const NotoggleSaleInfoSection = () => {
             <Details>
                 <DetailItem>
                     <Label>상호명</Label>
-                    <Value>전남손맛</Value>
+                    <Value>{name}</Value>
                 </DetailItem>
                 <DetailItem>
                     <Label>사업장 소재지</Label>
-                    <Value>전라남도 무안군 무안읍 무안호 530</Value>
+                    <Value>{address}</Value>
                 </DetailItem>
                 <DetailItem>
                     <Label>대표자</Label>
-                    <Value>김태지</Value>
+                    <Value>{representative}</Value>
                 </DetailItem>
                 <DetailItem>
                     <Label>고객센터</Label>
-                    <Value>010-1234-5678</Value>
+                    <Value>{phoneNumber}</Value>
                 </DetailItem>
             </Details>
         </SectionContainer>

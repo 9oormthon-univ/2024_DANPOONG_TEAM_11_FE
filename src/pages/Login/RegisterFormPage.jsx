@@ -32,6 +32,24 @@ const RegisterFormPage = () => {
     setIsFilled(Object.values({ ...form, [name]: value }).every(field => field !== ''));
   };
 
+  const handleSubmit = async () => {
+    if (!isFilled) return;
+  
+    const accessToken = localStorage.getItem('accessToken'); // Access Token 가져오기
+    if (!accessToken) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+  
+    try {
+      const response = await registerFarm(form, accessToken); // API 호출
+      alert('농산물 판매자 등록이 완료되었습니다!');
+      console.log('등록 성공:', response);
+    } catch (error) {
+      alert('등록 중 오류가 발생했습니다. 다시 시도해 주세요.');
+    }
+  };
+
   const getIcon = (fieldName) => {
     const isActive = activeField === fieldName || form[fieldName] !== '';
     switch (fieldName) {
@@ -130,7 +148,9 @@ const RegisterFormPage = () => {
           />
         </Label>
         
-        <SubmitButton isFilled={isFilled}>등록하기</SubmitButton>
+        <SubmitButton isFilled={isFilled} onClick={handleSubmit}>
+          등록하기
+        </SubmitButton>
       </Form>
     </Container>
   );
