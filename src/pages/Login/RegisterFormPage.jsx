@@ -43,11 +43,19 @@ const RegisterFormPage = () => {
   const handleSubmit = async () => {
     if (!isFilled) return;
 
-    const accessToken = localStorage.getItem('accessToken'); // Access Token 가져오기
+    const accessToken = localStorage.getItem('accessToken');
     if (!accessToken) {
       alert('로그인이 필요합니다.');
       return;
     }
+
+    // 필드 값 로그 출력
+    console.log("폼 데이터 확인:");
+    console.log("shopName:", form.shopName);
+    console.log("representativeName:", form.representativeName);
+    console.log("contactNumber:", form.contactNumber);
+    console.log("registrationNumber (문자열):", form.registrationNumber);
+    console.log("address:", form.address);
 
     try {
       let response;
@@ -62,7 +70,6 @@ const RegisterFormPage = () => {
       navigate('/home'); // 성공 시 홈 화면으로 이동
     } catch (error) {
       console.error(`${userType} 등록 실패:`, error.response?.data || error.message);
-      alert('등록 중 오류가 발생했습니다. 다시 시도해 주세요.');
     }
   };
 
@@ -170,10 +177,6 @@ const RegisterFormPage = () => {
 };
 
 export default RegisterFormPage;
-
-// Styled-components는 기존 스타일을 유지합니다.
-
-
 
 
 const Container = styled.div`

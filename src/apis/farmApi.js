@@ -12,12 +12,12 @@ export const registerFarm = async (form, accessToken) => {
         farmName: form.shopName,
         farmRepresentative: form.representativeName,
         phoneNumber: form.contactNumber,
-        businessRegistrationNumber: Number(form.registrationNumber), // 숫자
         businessRegistrationNumber: form.registrationNumber,
         address: form.address,
       },
       {
         headers: {
+          'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${accessToken}`, 
         },
       }

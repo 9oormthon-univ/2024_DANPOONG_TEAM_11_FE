@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getSalesList } from "../../../apis/saleList.js";
 import DataLoading from "../../common/DataLoading.jsx";
 import {useNavigate} from "react-router-dom";
+import Write from '../../../assets/image/sales/Write.svg';
 
 const categories = ['전체', '과일', '고구마/감자/밤', '쌈채소', '쌀/옥수수/콩', '고추/마늘/양파', '배추/무', '홍삼/인삼/새싹삼', '오이/파', '버섯', '나물', '기타'];
 const regions = ['전체', '서울', '경기/인천', '강원', '대전/세종', '충남/충북', '경남/경북', '전남/전북', '부산', '제주'];
@@ -100,6 +101,9 @@ const SalesListScreen = () => {
                     onClose={() => setIsFilterOpen(false)} // 모달 닫기
                 />
             )}
+            <FixedWriteIcon onClick={() => navigate('/register/farm-form')}>
+                <img src={Write} alt="Write Icon" />
+            </FixedWriteIcon>
         </Container>
     );
 };
@@ -112,7 +116,8 @@ const Container = styled.div`
     max-width: 480px;
     margin: 0 auto;
     padding: 1.3rem;
-    background-color: ${({ theme }) => theme.colors.white};
+    background-color: ${({ theme }) => theme.colors.white}; 
+    position: relative;
 `;
 
 const FilterButtonContainer = styled.div`
@@ -128,3 +133,42 @@ const ProductList = styled.div`
     gap: 1.5rem;
     padding-bottom: 7.188rem;
 `;
+
+const FixedWriteIcon = styled.div`
+    position: fixed; /* 브라우저 창 기준 */
+    bottom: 7rem; /* 브라우저 하단에서 7rem 위 */
+    right: 38%; /* 브라우저 오른쪽에서 2rem 안쪽 */
+    background-color: ${({ theme }) => theme.colors.primary};
+    border-radius: 50%;
+    display: flex;
+    cursor: pointer;
+
+    img {
+        width: 58px;
+        height: 58px;
+    }
+    
+    @media (max-width: 768px) {
+        bottom: 7rem;
+        right: 1.5rem;
+        width: 45px;
+        height: 45px;
+
+        img {
+            width: 50px;
+            height: 50px;
+        }
+    
+    @media (max-width: 390px) {
+        bottom: 7rem;
+        right: 1.5rem;
+        width: 45px;
+        height: 45px;
+
+        img {
+            width: 50px;
+            height: 50px;
+        }
+
+`;
+

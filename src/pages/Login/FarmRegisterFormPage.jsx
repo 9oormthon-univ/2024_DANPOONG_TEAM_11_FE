@@ -79,10 +79,14 @@ export default function FarmRegisterFormPage() {
       alert('모든 필드를 채워주세요.');
       return;
     }
-  
+
+    const accessToken = localStorage.getItem('accessToken'); 
+    const farmId = localStorage.getItem('farmId'); 
+    if (!accessToken || !farmId) {
+      return;
+    }
+
     const formData = new FormData();
-    
-    // JSON 데이터를 직렬화하여 FormData에 추가
     formData.append(
       'ingredientSaveRequestDto',
       JSON.stringify({
@@ -90,29 +94,29 @@ export default function FarmRegisterFormPage() {
         ingredientCategory: selectedCategory,
         uglyReason: selectedReason,
         ingredientDescription: formFields.reasonDescription,
-        price: Number(formFields.price), // 숫자로 변환
+        price: Number(formFields.price),
       })
     );
-  
+
     // 이미지 파일 배열 추가
     uploadedFiles.forEach((file) => {
-      formData.append('ingredientImages', file); // 이미지 배열 추가
+      formData.append('ingredientImages', file);
     });
-  
+
     try {
       setIsLoading(true);
-      const data = await registerIngredient('0', formData); // 농가 ID 예시
+      console.log('FormData 전송 중:', [...formData.entries()]);
+
+      const data = await registerIngredient(farmId, formData, accessToken); 
       alert('등록 성공!');
       console.log('응답 데이터:', data);
     } catch (err) {
-      console.error('등록 실패:', err);
+      console.error('등록 실패:', err.response?.data || err.message);
       setError(err.response?.data?.message || '등록 중 오류가 발생했습니다.');
     } finally {
       setIsLoading(false);
     }
   };
-  
-  
 
   return (
     <PageContainer>
@@ -332,6 +336,7 @@ const Input = styled.input`
 
   &:focus {
     outline: none;
+    background-color: #FFEFD9;
   }
 `;
 const TextArea = styled.textarea`
@@ -350,6 +355,7 @@ const TextArea = styled.textarea`
 
   &:focus {
     outline: none;
+    background-color: #FFEFD9;
   }
 `;
 
@@ -418,10 +424,15 @@ const FileInputContainer = styled.div`
   border-radius: 0.5rem;
   padding: 0.8rem;
   position: relative;
-  background-color: ${({ fileUploaded }) => (fileUploaded ? '#fff8e1' : '#fff')};
+
   height: 52px;
   font-size: 1rem;
   padding-left: 3rem;  
+
+   &:focus {
+    outline: none;
+    background-color: #FFEFD9;
+  }
 `;
 
 const FileLabel = styled.div`
@@ -470,6 +481,10 @@ const DropdownButton = styled.div`
   align-items: center;
   cursor: pointer;
   border-bottom: ${({ isOpen }) => (isOpen ? 'none' : '1px solid #B6B6B7')};
+
+  &:focus {
+    background-color: #FFEFD9; 
+  }
 `;
 
 const LeftContent = styled.div`
