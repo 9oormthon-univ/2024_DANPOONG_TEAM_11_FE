@@ -1,7 +1,9 @@
 import styled from 'styled-components';
-import RestaurantsListScreen from '../../components/restaurant/RestaurantLIstScreen.jsx';
+import RestaurantsListScreen from '../../components/restaurant/RestaurantListScreen.jsx'; // 경로 오타 수정
+
 
 const RestaurantsListPage = () => {
+
     return (
         <RestaurantListPageContainer>
             <RestaurantsListScreen />
@@ -14,10 +16,10 @@ export default RestaurantsListPage;
 const RestaurantListPageContainer = styled.div`
     width: 100%;
     max-width: 480px;
-    min-height: 100vh; /* 최소 높이 설정 */
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     background-color: ${({ theme }) => theme.colors.white};
     padding-top: 50px;
-    overflow-y: auto; /* 스크롤 허용 */
+    overflow-y: auto;
 `;

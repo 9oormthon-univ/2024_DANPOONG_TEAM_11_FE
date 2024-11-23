@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import restaurants from '../../apis/mock/restaurants.js';
 import { useParams } from 'react-router-dom';
 import DescriptionDetail from './DescriptionDetail.jsx';
 import Location from '../../assets/image/restaurant/location.png';
@@ -8,36 +7,61 @@ import Badge from '../../assets/image/restaurant/badge.png';
 import RestaurantModalSection from './RestaurantModalSection.jsx';
 import RestaurantReviewSection from './RestaurantReviewSection.jsx';
 import BusinessInfoSection from '../common/BusinessInfoSection.jsx';
+import {useQuery} from "@tanstack/react-query";
+import {getRestaurantDetail} from "../../apis/restaurantDetail.js";
 
 const RestaurantDetailScreen = () => {
     const { restaurantId } = useParams();
-    const restaurant = restaurants.find((r) => r.id === parseInt(restaurantId, 10));
 
-    if (!restaurant) {
-        return <ScreenContainer>레스토랑 정보를 찾을 수 없습니다.</ScreenContainer>;
+    const {data, isPending, error} = useQuery({
+        queryKey: ['restaurantDetail'], // 캐싱 Key
+        queryFn: () => getRestaurantDetail(restaurantId), // 기본 페이지와 크기 설정
+    });
+
+
+    if (isPending) {
+        return <ScreenContainer>로딩 중...</ScreenContainer>;
     }
+
+    if (error) {
+        return <ScreenContainer>데이터를 불러오는 중 오류가 발생했습니다.</ScreenContainer>;
+    }
+
+    const restaurant = data?.data;
+    const menu = data?.data.menuInfoResponseDTOs.menuInfoResponseDTOs;
+
+    const mainMenu = menu.find((menu) => menu.isMainMenu);
+    const image1 = mainMenu?.farmProduceImage || 'default-main-menu-image-url'; // 이미지가 없을 경우 기본 URL
+
+    const secondMenu = menu[1];
+    const image2 = secondMenu?.menuImage || 'default-second-menu-image-url'; // 이미지가 없을 경우 기본 URL
+
+    const time = "매일" + restaurant.openTime + ' ~ ' + restaurant.closeTime;
+    const guideItems = restaurant.precautions.split('\n');
 
     return (
         <ScreenContainer>
             <DescriptionSection>
                 <ImageContainer>
-                    <Image src={restaurant.image.main} />
+                    <Image src={mainMenu.menuImage} />
                 </ImageContainer>
-                <Name>{restaurant.name}</Name>
+                <Name>{restaurant.restaurantName}</Name>
                 <Description>
-                    <DescriptionDetail icon={Badge} text={restaurant.badge} />
-                    <DescriptionDetail icon={Location} text={restaurant.location} />
-                    <DescriptionDetail icon={Time} text={restaurant.time} />
+                    <DescriptionDetail icon={Badge} text={"농담 인증 식당"} />
+                    <DescriptionDetail icon={Location} text={restaurant.address} />
+                    <DescriptionDetail icon={Time} text={time} />
                 </Description>
             </DescriptionSection>
             <DetailSection>
                 <RestaurantModalSection
-                    description={restaurant.description}
-                    name={restaurant.name}
-                    image1={restaurant.image.detail}
-                    image2={restaurant.image.main}
-                    menu={restaurant.menu}
-                    guide={restaurant.guide}
+                    farmProduce={menu.farmProduce}
+                    menuName={menu.name}
+                    name={restaurant.restaurantName}
+                    menu={menu}
+                    mainMenuImage={mainMenu.menuImage}
+                    image1={image1}
+                    image2={image2}
+                    guide={guideItems}
                 />
             </DetailSection>
             <RestaurantReviewSection />
