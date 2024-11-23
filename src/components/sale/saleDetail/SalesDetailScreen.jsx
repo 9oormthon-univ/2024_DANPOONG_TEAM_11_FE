@@ -9,41 +9,57 @@ import PressureIcon from "../../../assets/image/sales/Pressure.svg";
 import SaleReviewSection from "./SaleReviewerSection.jsx";
 import SaleInfoSection from "../../..//components/common/SaleInfoSection.jsx";
 import MiniLight from "../../..//assets/image/sales/MiniLight.svg";
+import {useNavigate, useParams} from "react-router-dom";
+import {useQuery} from "@tanstack/react-query";
+import {getSaleDetail} from "../../../apis/saleDetail.js";
+import DataLoading from "../../common/DataLoading.jsx";
 
 const ProductDetail = () => {
-    const product = {
-        name: "조금 작은 무안 양파",
-        seller: "전남 손맛",
-        originCertification: "원산지 인증",
-        contact: "010-1234-5678",
-        price: "1kg 당 3,000원",
-        description: `보통 양파보다 크기가 작아요. 맛과 신선도는 똑같으니 걱정 마세요.
-                        우리 양파는:
-                        - 🧅 알맹이가 꽉 차있어요.
-                        - 🧅 입 안에 달달함이 퍼져요.
-                        - 🧅 수분을 잡았어요.
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const nav = useNavigate();
+    const { ingredientId } = useParams();
 
-                        소량~대량 구매, 정기 구매 모두 가능하니 편하게 연락 주세요.`,
-        images: [
-            "https://health.chosun.com/site/data/img_dir/2024/08/13/2024081302145_0.jpg",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAG0hNdJhgMtsYd8e3FGuISM_tNeqH70Duxw&s",
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzEQH1szv2FCXJW1daeXv6yhMyO0w78vUSGQ&s",
-        ],
+    const { data, isPending, error } = useQuery({
+        queryKey: ['ingredientDetail', ingredientId],
+        queryFn: () => {
+            return getSaleDetail(ingredientId);
+        },
+        staleTime: 1000 * 60 * 5,
+        cacheTime: 1000 * 60 * 10,
+    });
+
+    if (isPending) {
+        return <DataLoading />;
+    }
+
+    if (error) {
+        return <div>데이터를 불러오는 중 오류가 발생했습니다.</div>;
+    }
+
+    const handleNavigateToSeller = () => {
+        if (farmDto.farmId) {
+            nav(`/details/seller/${farmDto.farmId}`); // 앞에 '/' 추가
+        }
     };
 
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const product = data?.data || {};
+    const farmDto = data?.data.farmSummaryResponseDTO || {};
+
+    const images = product?.ingredientImages || [];
 
     const handlePrevClick = () => {
         setCurrentImageIndex((prevIndex) =>
-            prevIndex === 0 ? product.images.length - 1 : prevIndex - 1
+            prevIndex === 0 ? images.length - 1 : prevIndex - 1
         );
     };
 
-    const handleNextClick = () => {
+const handleNextClick = () => {
         setCurrentImageIndex((prevIndex) =>
-            prevIndex === product.images.length - 1 ? 0 : prevIndex + 1
+            prevIndex === images.length - 1 ? 0 : prevIndex + 1
         );
     };
+
 
     return (
         <Contain>
@@ -51,19 +67,19 @@ const ProductDetail = () => {
             <ArrowButton onClick={handlePrevClick}>
                 <Arrow src={LeftArrowIcon} alt="이전 이미지" />
             </ArrowButton>
-            <ProductImage
-                src={product.images[currentImageIndex]}
-                alt={`상품 이미지 ${currentImageIndex + 1}`}
-            />
+                <ProductImage
+                    src={product?.ingredientImages?.[currentImageIndex] || 'default-image-url'}
+                    alt={`상품 이미지 ${currentImageIndex + 1}`}
+                />
             <RightArrowButton onClick={handleNextClick}>
                 <Arrow src={RightArrowIcon} alt="다음 이미지" />
             </RightArrowButton>
             </ImageContainer>
             <Container>
                 <InfoSection>
-                    <ProductName>{product.name}</ProductName>
-                    <ProductBadge>
-                        {product.seller}
+                    <ProductName onClick={handleNavigateToSeller}>{product.ingredientName}</ProductName>
+                    <ProductBadge onClick={handleNavigateToSeller}>
+                        {farmDto.farmName}
                         <BadgeIcon src={Badge} alt="배지 아이콘" />
                         <MiniLightIcon src={MiniLight} alt="오른쪽 화살표" />
                     </ProductBadge>
@@ -73,15 +89,15 @@ const ProductDetail = () => {
                     <DescriptionDetail>
                         <DetailItem>
                             <DetailIcon src={CertifyIcon} alt="원산지 인증 아이콘" />
-                            {product.originCertification}
+                            {"원산지 인증"}
                         </DetailItem>
                         <DetailItem>
                             <DetailIcon src={PhoneNumberIcon} alt="전화번호 아이콘" />
-                            {product.contact}
+                            {farmDto.phoneNumber}
                         </DetailItem>
                         <DetailItem>
                             <DetailIcon src={PressureIcon} alt="가격 아이콘" />
-                            {product.price}
+                            1kg당 {product.price}원
                         </DetailItem>
                     </DescriptionDetail>
                 </InfoSection>
@@ -91,9 +107,9 @@ const ProductDetail = () => {
                 <DescriptionContent>
                     <SectionTitle>상세설명</SectionTitle>
                     <SectionQuestion>왜 못난이인가요?</SectionQuestion>
-                    <SectionAnswer>크기가 작아요!</SectionAnswer>
+                    <SectionAnswer>{product.uglyReason}</SectionAnswer>
                     <DetailSection>
-                        <DetailText>{product.description}</DetailText>
+                        <DetailText>{product.ingredientDescription}</DetailText>
                     </DetailSection>
                 </DescriptionContent>
                 <HorizontalLine/>
@@ -102,7 +118,12 @@ const ProductDetail = () => {
             <SaleReviewSection />
             <HorizontalLine/>
             </Container>
-            <SaleInfoSection />
+            <SaleInfoSection
+                name={farmDto.farmName}
+                address={farmDto.address}
+                representative={farmDto.farmRepresentative}
+                phoneNumber={farmDto.phoneNumber}
+            />
         </Contain>
     );
 };
@@ -209,7 +230,7 @@ const DetailItem = styled.div`
     gap: 3px; 
     font-size: 1rem;
     color: #323335;
-    font-weight: 600;
+    font-weight: 400;
 `;
 
 const DetailIcon = styled.img`

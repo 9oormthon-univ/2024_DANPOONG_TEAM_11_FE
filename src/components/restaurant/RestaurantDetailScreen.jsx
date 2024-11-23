@@ -9,32 +9,33 @@ import RestaurantReviewSection from './RestaurantReviewSection.jsx';
 import BusinessInfoSection from '../common/BusinessInfoSection.jsx';
 import {useQuery} from "@tanstack/react-query";
 import {getRestaurantDetail} from "../../apis/restaurantDetail.js";
+import DataLoading from "../common/DataLoading.jsx";
 
 const RestaurantDetailScreen = () => {
     const { restaurantId } = useParams();
-
     const {data, isPending, error} = useQuery({
-        queryKey: ['restaurantDetail'], // 캐싱 Key
-        queryFn: () => getRestaurantDetail(restaurantId), // 기본 페이지와 크기 설정
+        queryKey: ['restaurantDetail', restaurantId], // 캐싱 Key
+        queryFn: () => getRestaurantDetail(restaurantId),
     });
 
-
     if (isPending) {
-        return <ScreenContainer>로딩 중...</ScreenContainer>;
+        return <DataLoading />;
     }
 
     if (error) {
         return <ScreenContainer>데이터를 불러오는 중 오류가 발생했습니다.</ScreenContainer>;
     }
 
-    const restaurant = data?.data;
-    const menu = data?.data.menuInfoResponseDTOs.menuInfoResponseDTOs;
+    const restaurant = data?.data || {};
+    const menu = data?.data.menuInfoResponseDTOs.menuInfoResponseDTOs || [];
+
 
     const mainMenu = menu.find((menu) => menu.isMainMenu);
     const image1 = mainMenu?.farmProduceImage || 'default-main-menu-image-url'; // 이미지가 없을 경우 기본 URL
 
     const secondMenu = menu[1];
     const image2 = secondMenu?.menuImage || 'default-second-menu-image-url'; // 이미지가 없을 경우 기본 URL
+
 
     const time = "매일" + restaurant.openTime + ' ~ ' + restaurant.closeTime;
     const guideItems = restaurant.precautions.split('\n');

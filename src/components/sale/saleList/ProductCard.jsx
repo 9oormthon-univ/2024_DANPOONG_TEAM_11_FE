@@ -1,32 +1,40 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ProductCard = ({ product }) => (
-  <Card>
-    <ImageBox>
-      <Image src={product.image} alt={product.name} />
-    </ImageBox>
-    <Name>{product.name}</Name>
-    <Info>
-      <Weight>{product.weight}</Weight>
-    </Info>
-  </Card>
-);
+const ProductCard = ({ product, onClick }) => {
+    return (
+        <Card onClick={onClick}>
+            <ImageBox>
+                <Image src={product.image} alt={product.name} />
+            </ImageBox>
+            <Name>{product.name}</Name>
+            <Info>
+                <Price>1kg 당 {product.price}원</Price>
+            </Info>
+        </Card>
+    );
+};
 
 export default ProductCard;
 
 const Card = styled.div`
-  border: 1px solid #DDD;
-  border-radius: 0.5rem;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid #DDD;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer; /* 클릭 가능 UI 표시 */
+    transition: transform 0.2s ease;
+
+    &:hover {
+        transform: translateY(-5px); /* 호버 효과 */
+    }
 `;
 
 const ImageBox = styled.div`
-  width: 100%;
-  height: 11.8rem;
-  overflow: hidden;
-  border-radius: 0.5rem;
+    width: 100%;
+    height: 11.8rem;
+    overflow: hidden;
+    border-radius: 0.5rem;
 `;
 
 const Image = styled.img`
@@ -50,13 +58,6 @@ const Info = styled.div`
   padding: 0.75rem 0.8rem;
   color: ${({ theme }) => theme.colors.orange};
   gap: 0.7rem;
-`;
-
-const Weight = styled.span`
-  font-size: 0.9rem;
-  border: 1px solid ${({ theme }) => theme.colors.orange};
-  border-radius: 0.5rem;
-  padding: 0.3rem 0.7rem;
 `;
 
 const Price = styled.span`

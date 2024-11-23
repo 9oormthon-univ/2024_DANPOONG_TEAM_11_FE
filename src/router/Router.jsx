@@ -16,7 +16,8 @@ import RestaurantDetailPage from '../pages/Restaurant/RestaurantsDetailPage';
 import RegisterFormPage from '../pages/Login/RegisterFormPage';
 import LoadingPage from '../pages/Login/LoadingPage';
 import FarmRegisterFormPage from '../pages/Login/FarmRegisterFormPage';
-import KakaoCallbackPage from '../pages/Login/KakaoCallbackPage'; // 새로 추가된 컴포넌트
+import ChatingPage from '../pages/Sales/ChatingPage';
+import KakaoCallbackPage from '../pages/Login/KakaoCallbackPage';
 
 const router = createBrowserRouter([
   // 메인 Layout 경로 (로그인 관련)
@@ -28,20 +29,22 @@ const router = createBrowserRouter([
       { path: 'select-user', element: <UserSelectionPage /> },
       { path: 'loading', element: <LoadingPage /> },
       { path: "/oauth/callback/kakao", element: <KakaoCallbackPage />},
+      { path: 'chat', element: <ChatingPage />},
       {
         path: 'register',
         element: <RegisterLayout />,
         children: [
           { path: 'form', element: <RegisterFormPage /> },
           { path: 'farm-form', element: <FarmRegisterFormPage /> },
+
         ],
       },
       {
         path: 'details',
         element: <DetailLayout />,
         children: [
-          { path: 'sales/:productId', element: <SalesDetailPage /> },
-          { path: 'seller/:sellerId', element: <SellerDetailPage /> },
+          { path: 'sales/:ingredientId', element: <SalesDetailPage /> },
+          { path: 'seller/:farmId', element: <SellerDetailPage /> },
           { path: 'restaurant/:restaurantId', element: <RestaurantDetailPage /> },
         ],
       },
