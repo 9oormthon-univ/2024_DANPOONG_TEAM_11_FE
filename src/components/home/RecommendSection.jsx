@@ -6,6 +6,7 @@ import home1 from '../../assets/image/home/home_1.svg';
 import home2 from '../../assets/image/home/home_2.svg';
 import home3 from '../../assets/image/home/home_3.svg';
 import home4 from '../../assets/image/home/home_4.svg';
+import home5 from '../../assets/image/home/home_5.svg';
 import home1_1 from '../../assets/image/home/home_1_1.svg';
 import home2_2 from '../../assets/image/home/home_2_2.svg';
 import home3_3 from '../../assets/image/home/home_3_3.svg';
@@ -18,6 +19,7 @@ const recommendedItems = [
   { title: '배추', icon: home2, path: '/cabbage' },
   { title: '토마토', icon: home3, path: '/tomato' },
   { title: '당근', icon: home4, path: '/carrot' },
+  {title: '애호박', icon: home5, path: '/zucchini' },
 ];
 
 const rejectedItems = [
