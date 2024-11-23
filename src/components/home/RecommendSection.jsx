@@ -15,19 +15,19 @@ import home5_5 from '../../assets/image/home/home_5_5.svg';
 
 
 const recommendedItems = [
-  { title: '양파', icon: home1, path: '/onion' },
-  { title: '배추', icon: home2, path: '/cabbage' },
-  { title: '토마토', icon: home3, path: '/tomato' },
-  { title: '당근', icon: home4, path: '/carrot' },
-  {title: '애호박', icon: home5, path: '/zucchini' },
+  { title: '양파', icon: home1},
+  { title: '배추', icon: home2},
+  { title: '토마토', icon: home3 },
+  { title: '당근', icon: home4 },
+  {title: '애호박', icon: home5 },
 ];
 
 const rejectedItems = [
-  { title: '작아요', icon: home1_1, path: '/small' },
-  { title: '색이 변했어요', icon: home2_2, path: '/color-changed' },
-  { title: '울퉁불퉁해요', icon: home3_3, path: '/bumpy' },
-  { title: '상처났어요', icon: home4_4, path: '/bruised' },
-  { title: '모양이 달라요', icon: home5_5, path: '/different-shape' },
+  { title: '작아요', icon: home1_1},
+  { title: '색이 변했어요', icon: home2_2 },
+  { title: '울퉁불퉁해요', icon: home3_3},
+  { title: '상처났어요', icon: home4_4 },
+  { title: '모양이 달라요', icon: home5_5 },
 ];
 
 const RecommendSection = ({ title, type }) => {

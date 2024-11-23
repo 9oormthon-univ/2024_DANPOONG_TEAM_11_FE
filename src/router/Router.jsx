@@ -29,13 +29,13 @@ const router = createBrowserRouter([
       { path: 'select-user', element: <UserSelectionPage /> },
       { path: 'loading', element: <LoadingPage /> },
       { path: "/oauth/callback/kakao", element: <KakaoCallbackPage />},
-      { path: 'chat', element: <ChatingPage />},
       {
         path: 'register',
         element: <RegisterLayout />,
         children: [
           { path: 'form', element: <RegisterFormPage /> },
           { path: 'farm-form', element: <FarmRegisterFormPage /> },
+          { path: 'chat', element: <ChatingPage />},
 
         ],
       },

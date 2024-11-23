@@ -19,7 +19,11 @@ const RestaurantDetailScreen = () => {
     });
 
     if (isPending) {
-        return <DataLoading />;
+        return(
+            <Wrapper>
+                <DataLoading />
+            </Wrapper>
+        )
     }
 
     if (error) {
@@ -72,6 +76,14 @@ const RestaurantDetailScreen = () => {
 };
 
 export default RestaurantDetailScreen;
+
+const Wrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+`;
 
 const ScreenContainer = styled.div`
     width: 100%;
