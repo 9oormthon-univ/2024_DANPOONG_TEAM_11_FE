@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // 페이지 이동용
 import styled from 'styled-components';
 
 const UserSelectionPage = () => {
   const [selectedOption, setSelectedOption] = useState(null);
+  const navigate = useNavigate();
 
   const options = [
     { emoji: '👨🏻‍🌾', label: '농산물 생산자' },
@@ -11,18 +13,18 @@ const UserSelectionPage = () => {
   ];
 
   const handleOptionClick = (index) => {
-    // 선택된 옵션을 다시 클릭하면 선택 해제
-    if (selectedOption === index) {
-      setSelectedOption(null);
-    } else {
-      setSelectedOption(index);
-    }
+    setSelectedOption(index);
   };
-  
+
   const handleNextClick = () => {
-    if (selectedOption !== null) {
-      // 다음 단계로 이동하는 로직 여기에 추가 예정!
-      console.log(`선택된 옵션: ${options[selectedOption].label}`);
+    if (selectedOption === null) return;
+
+    const selectedLabel = options[selectedOption].label;
+
+    if (selectedLabel === '일반 사용자') {
+      navigate('/home'); // 일반 사용자는 바로 홈으로 이동
+    } else {
+      navigate('/register/form', { state: { userType: selectedLabel } }); // 선택된 사용자 유형 전달
     }
   };
 

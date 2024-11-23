@@ -79,32 +79,40 @@ export default function FarmRegisterFormPage() {
       alert('모든 필드를 채워주세요.');
       return;
     }
-
+  
     const formData = new FormData();
-    formData.append('ingredientName', formFields.productName);
-    formData.append('uglyReason', selectedReason);
-    formData.append('ingredientDescription', formFields.reasonDescription);
-    formData.append('price', formFields.price);
-    formData.append('category', selectedCategory);
-    formData.append('farmId', '1'); // 농가 ID 예시
-
-    // 업로드된 파일 추가
+    
+    // JSON 데이터를 직렬화하여 FormData에 추가
+    formData.append(
+      'ingredientSaveRequestDto',
+      JSON.stringify({
+        ingredientName: formFields.productName,
+        ingredientCategory: selectedCategory,
+        uglyReason: selectedReason,
+        ingredientDescription: formFields.reasonDescription,
+        price: Number(formFields.price), // 숫자로 변환
+      })
+    );
+  
+    // 이미지 파일 배열 추가
     uploadedFiles.forEach((file) => {
-      formData.append('ingredientImages', file);
+      formData.append('ingredientImages', file); // 이미지 배열 추가
     });
-
+  
     try {
-      setIsLoading(true); // 로딩 시작
-      const data = await registerIngredient('3', formData); // API 호출
+      setIsLoading(true);
+      const data = await registerIngredient('0', formData); // 농가 ID 예시
       alert('등록 성공!');
       console.log('응답 데이터:', data);
     } catch (err) {
       console.error('등록 실패:', err);
       setError(err.response?.data?.message || '등록 중 오류가 발생했습니다.');
     } finally {
-      setIsLoading(false); // 로딩 종료
+      setIsLoading(false);
     }
   };
+  
+  
 
   return (
     <PageContainer>
@@ -221,7 +229,7 @@ export default function FarmRegisterFormPage() {
         <Label>상품 상세 설명을 입력해주세요. (최대 200자)</Label>
         <InputContainer>
           <ReasonIcon
-            src={formFields.price ? Check_active : Check}
+            src={formFields.reasonDescription ? Check_active : Check}
             alt="Check Icon"
           />
           <TextArea
@@ -253,7 +261,6 @@ export default function FarmRegisterFormPage() {
         <SubmitButton isFormValid={isFormValid} onClick={handleSubmit} disabled={!isFormValid}>
           {isLoading ? '등록 중...' : '등록하기'}
         </SubmitButton>
-        {error && <ErrorMessage>{error}</ErrorMessage>}
       </Form>
     </PageContainer>
   );

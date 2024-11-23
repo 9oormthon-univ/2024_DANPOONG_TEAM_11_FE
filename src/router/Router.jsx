@@ -27,6 +27,7 @@ const router = createBrowserRouter([
       { path: 'login', element: <LoginPage /> },
       { path: 'select-user', element: <UserSelectionPage /> },
       { path: 'loading', element: <LoadingPage /> },
+      { path: "/oauth/callback/kakao", element: <KakaoCallbackPage />},
       {
         path: 'register',
         element: <RegisterLayout />,

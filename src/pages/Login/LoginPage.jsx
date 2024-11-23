@@ -74,46 +74,93 @@
 
 
 
-import React from 'react';
+
+
+// import React from 'react';
+// import styled from 'styled-components';
+// import loginLogo from '../../assets/image/login/loginLogo.svg';
+// import kakaoButton from '../../assets/image/login/kakaoButton.svg';
+
+// export default function LoginPage() {
+//   // 카카오 로그인 요청을 보낼 함수
+//   // const handleKakaoLogin = () => {
+//   //   const REST_API_KEY = import.meta.env.VITE_KAKAO_API_KEY; // 환경 변수에서 REST API 키 가져오기
+//   //   const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI; // 환경 변수에서 Redirect URI 가져오기
+
+//   //   console.log('REST_API_KEY:', REST_API_KEY);
+//   //   console.log('REDIRECT_URI:', REDIRECT_URI);
+
+//   //   // 카카오 인증 URL로 이동 (scope에 openid 추가)
+//   //   // window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=openid`;
+//   //   window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+//   // };
+
+//    // window.location.href =  `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=$%7B%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98%7D&redirect_uri=$%7B%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98%7D%27`;
+//   // };
+//   // const handleKakaoLogin = () => {
+//   //   const REST_API_KEY = import.meta.env.VITE_KAKAO_API_KEY; // 환경 변수에서 REST API 키 가져오기
+//   //   const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI; // 환경 변수에서 Redirect URI 가져오기
+  
+//   //   // 카카오 인증 URL로 이동 (scope에 openid 추가)
+//   //   window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=openid`;
+//   // };
+
+
+//   const handleKakaoLogin = () => {
+//     const REST_API_KEY = import.meta.env.VITE_KAKAO_API_KEY; // REST API 키
+//     const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI; // Redirect URI
+
+//     const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+//     console.log("카카오 인증 URL:", kakaoAuthUrl);
+//     window.location.href = kakaoAuthUrl;
+//   };
+  
+//   return (
+//     <LoginContainer>
+//       <img src={loginLogo} alt="Login Logo" />
+//       <KakaoButton src={kakaoButton} alt="kakao Button" onClick={handleKakaoLogin} />
+//     </LoginContainer>
+//   );
+// }
+
+// const LoginContainer = styled.div`
+//   width: 100%;
+//   height: 100vh;
+//   max-width: 480px;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
+//   padding: 2rem 0;
+// `;
+
+// const KakaoButton = styled.img`
+//   padding-top: 5rem;
+//   cursor: pointer;
+// `;
+
+
+
+
+
+
+
+
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import loginLogo from '../../assets/image/login/loginLogo.svg';
 import kakaoButton from '../../assets/image/login/kakaoButton.svg';
 
 export default function LoginPage() {
-  // 카카오 로그인 요청을 보낼 함수
-  // const handleKakaoLogin = () => {
-  //   const REST_API_KEY = import.meta.env.VITE_KAKAO_API_KEY; // 환경 변수에서 REST API 키 가져오기
-  //   const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI; // 환경 변수에서 Redirect URI 가져오기
-
-  //   console.log('REST_API_KEY:', REST_API_KEY);
-  //   console.log('REDIRECT_URI:', REDIRECT_URI);
-
-  //   // 카카오 인증 URL로 이동 (scope에 openid 추가)
-  //   // window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=openid`;
-  //   window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-  // };
-
   const handleKakaoLogin = () => {
-    const REST_API_KEY = import.meta.env.VITE_KAKAO_API_KEY; // 환경 변수에서 REST API 키 가져오기
-    const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI; // 환경 변수에서 Redirect URI 가져오기
-    
+    const REST_API_KEY = import.meta.env.VITE_KAKAO_API_KEY; // REST API 키
+    const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI; // Redirect URI
+
     const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-  
+    console.log("사용된 redirect_uri:", REDIRECT_URI,kakaoAuthUrl);
     window.location.href = kakaoAuthUrl;
   };
 
-  // window.location.href =  `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=$%7B%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98%7D&redirect_uri=$%7B%ED%99%98%EA%B2%BD%EB%B3%80%EC%88%98%7D%27`;
-  // };
-  // const handleKakaoLogin = () => {
-  //   const REST_API_KEY = import.meta.env.VITE_KAKAO_API_KEY; // 환경 변수에서 REST API 키 가져오기
-  //   const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI; // 환경 변수에서 Redirect URI 가져오기
-  
-  //   // 카카오 인증 URL로 이동 (scope에 openid 추가)
-  //   window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=openid`;
-  // };
-
-  
-  
   return (
     <LoginContainer>
       <img src={loginLogo} alt="Login Logo" />
