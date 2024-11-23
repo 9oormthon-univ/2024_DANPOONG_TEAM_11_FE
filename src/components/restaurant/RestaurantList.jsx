@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import RestaurantItem from './RestaurantItem';
 import {useQuery} from "@tanstack/react-query";
 import {getRestaurantList} from "../../apis/restaurantList.js";
+import DataLoading from "../common/DataLoading.jsx";
 
 const RestaurantList = () => {
 
@@ -12,7 +13,7 @@ const RestaurantList = () => {
     });
 
     if (isPending) {
-        return <div>로딩 중...</div>;
+        return <DataLoading />
     }
 
     if (error) {
@@ -39,6 +40,8 @@ const RestaurantList = () => {
 };
 
 export default RestaurantList;
+
+
 
 const ListContainer = styled.div`
     display: flex;

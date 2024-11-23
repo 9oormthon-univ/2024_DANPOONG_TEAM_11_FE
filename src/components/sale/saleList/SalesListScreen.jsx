@@ -1,47 +1,48 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom'; // useNavigate 추가
 import ProductCard from "./ProductCard";
 import FilterModal from "./FilterModal";
 import FilterButton from "./FilterButton";
 import { useQuery } from "@tanstack/react-query";
 import { getSalesList } from "../../../apis/saleList.js";
+import DataLoading from "../../common/DataLoading.jsx";
 
 const categories = ['전체', '과일', '고구마/감자/밤', '쌈채소', '쌀/옥수수/콩', '고추/마늘/양파', '배추/무', '홍삼/인삼/새싹삼', '오이/파', '버섯', '나물', '기타'];
 const regions = ['전체', '서울', '경기/인천', '강원', '대전/세종', '충남/충북', '경남/경북', '전남/전북', '부산', '제주'];
 
 const SalesListScreen = () => {
-    // 필터 상태
     const [selectedCategory, setSelectedCategory] = useState('전체');
     const [selectedRegion, setSelectedRegion] = useState('전체');
     const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const navigate = useNavigate(); // useNavigate 선언
 
-    // React Query로 데이터 가져오기
-    const { data, isLoading, error } = useQuery({
+    const { data, isPending, error } = useQuery({
         queryKey: ['ingredientsList', { category: selectedCategory, region: selectedRegion }],
         queryFn: ({ queryKey }) => {
             const [_key, { category, region }] = queryKey;
-            return getSalesList(category, region, 0, 10); // API 호출
+            return getSalesList(category, region, 0, 10);
         },
-        staleTime: 1000 * 60 * 5, // 5분 동안 데이터를 새로 요청하지 않음
-        cacheTime: 1000 * 60 * 10, // 10분 동안 데이터를 캐싱
+        staleTime: 1000 * 60 * 5,
+        cacheTime: 1000 * 60 * 10,
     });
 
-    // 로딩 및 에러 처리
-    if (isLoading) {
-        return <div>로딩 중...</div>;
+    if (isPending) {
+        return <DataLoading />;
     }
 
     if (error) {
         return <div>데이터를 불러오는 중 오류가 발생했습니다.</div>;
     }
-    console.log(data);
 
-    // 받아온 데이터 매핑
     const products = data?.data?.ingredientInfoResponseDTOs || [];
+
+    const handleProductClick = (ingredientId) => {
+        navigate(`/details/sales/${ingredientId}`);
+    };
 
     return (
         <Container>
-            {/* 필터 버튼 */}
             <FilterButtonContainer>
                 <FilterButton
                     isSelected={selectedCategory !== '전체'}
@@ -58,7 +59,7 @@ const SalesListScreen = () => {
             {/* 상품 리스트 */}
             <ProductList>
                 {products.map((product) => {
-                    const imageUrl = product.ingredientImages?.[0] || 'https://via.placeholder.com/150'; // 기본 이미지 추가
+                    const imageUrl = product.ingredientImages?.[0] || 'https://via.placeholder.com/150';
                     return (
                         <ProductCard
                             key={product.ingredientId}
@@ -70,6 +71,7 @@ const SalesListScreen = () => {
                                 farmName: product.farmSummaryResponseDTO?.farmName,
                                 image: imageUrl,
                             }}
+                            onClick={() => handleProductClick(product.ingredientId)}
                         />
                     );
                 })}
@@ -85,11 +87,11 @@ const SalesListScreen = () => {
                     selectedRegion={selectedRegion}
                     onCategorySelect={(category) => {
                         setSelectedCategory(category === selectedCategory ? '전체' : category);
-                        setIsFilterOpen(false); // 모달 닫기
+                        setIsFilterOpen(false);
                     }}
                     onRegionSelect={(region) => {
                         setSelectedRegion(region === selectedRegion ? '전체' : region);
-                        setIsFilterOpen(false); // 모달 닫기
+                        setIsFilterOpen(false);
                     }}
                     onClose={() => setIsFilterOpen(false)}
                 />

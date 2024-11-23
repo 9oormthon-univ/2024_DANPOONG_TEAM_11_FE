@@ -12,6 +12,7 @@ import MiniLight from "../../..//assets/image/sales/MiniLight.svg";
 import {useNavigate, useParams} from "react-router-dom";
 import {useQuery} from "@tanstack/react-query";
 import {getSaleDetail} from "../../../apis/saleDetail.js";
+import DataLoading from "../../common/DataLoading.jsx";
 
 const ProductDetail = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -28,7 +29,7 @@ const ProductDetail = () => {
     });
 
     if (isPending) {
-        return <div>로딩 중...</div>;
+        return <DataLoading />;
     }
 
     if (error) {

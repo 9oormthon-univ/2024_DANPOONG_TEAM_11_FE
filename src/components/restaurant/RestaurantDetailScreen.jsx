@@ -9,6 +9,7 @@ import RestaurantReviewSection from './RestaurantReviewSection.jsx';
 import BusinessInfoSection from '../common/BusinessInfoSection.jsx';
 import {useQuery} from "@tanstack/react-query";
 import {getRestaurantDetail} from "../../apis/restaurantDetail.js";
+import DataLoading from "../common/DataLoading.jsx";
 
 const RestaurantDetailScreen = () => {
     const { restaurantId } = useParams();
@@ -18,7 +19,7 @@ const RestaurantDetailScreen = () => {
     });
 
     if (isPending) {
-        return <ScreenContainer>로딩 중...</ScreenContainer>;
+        return <DataLoading />;
     }
 
     if (error) {
