@@ -47,8 +47,6 @@ const ProductDetail = () => {
         }
     };
 
-    console.log(data);
-
 
     const product = data?.data || {};
     const farmDto = data?.data.farmSummaryResponseDTO || {};

@@ -4,9 +4,6 @@ import styled from 'styled-components';
 const DataLoading = () => {
     return (
         <LoadingContainer>
-            <span role="status" aria-live="polite" style={{ visibility: 'hidden' }}>
-        Loading...
-      </span>
             <FadeLoader
                 color= "#FFD700"
             />
