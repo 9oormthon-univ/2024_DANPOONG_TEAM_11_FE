@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom'; // 페이지 이동을 위한 라우터 훅
+import { useLocation, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import { registerFarm } from '../../apis/farmApi'; // 농산물 생산자 등록 API
 import { registerRestaurant } from '../../apis/restaurantApi'; // 요식업 종사자 등록 API
 import Shop from '../../assets/image/login/Shop.svg';
@@ -12,20 +13,12 @@ import Pin from '../../assets/image/login/Pin.svg';
 import PinActive from '../../assets/image/login/Pin_active.svg';
 import ChieldCheck from '../../assets/image/login/ChieldCheck.svg';
 import ChieldCheckActive from '../../assets/image/login/ChieldCheck_active.svg';
-import styled from 'styled-components';
 
 const RegisterFormPage = () => {
   const location = useLocation(); // 이전 페이지에서 전달된 데이터 가져오기
-  const navigate = useNavigate(); // 페이지 이동을 위한 navigate 함수
+  const navigate = useNavigate();
 
-  // 전달된 userType
-  const userType = location.state?.userType || '농산물 생산자';
-
-  // 잘못된 접근일 경우 홈으로 이동
-  if (!location.state) {
-    navigate('/home');
-    return null;
-  }
+  const userType = location.state?.userType || '농산물 생산자'; // 기본값: 농산물 생산자
 
   const [form, setForm] = useState({
     shopName: '',
@@ -50,7 +43,7 @@ const RegisterFormPage = () => {
   const handleSubmit = async () => {
     if (!isFilled) return;
 
-    const accessToken = localStorage.getItem('accessToken'); // 액세스 토큰 가져오기
+    const accessToken = localStorage.getItem('accessToken'); // Access Token 가져오기
     if (!accessToken) {
       alert('로그인이 필요합니다.');
       return;
@@ -59,19 +52,17 @@ const RegisterFormPage = () => {
     try {
       let response;
       if (userType === '농산물 생산자') {
-        response = await registerFarm(form, accessToken); // 농산물 생산자 등록
+        response = await registerFarm(form, accessToken); // 농산물 생산자 등록 API 호출
       } else if (userType === '요식업 종사자') {
-        response = await registerRestaurant(form, accessToken); // 요식업 종사자 등록
+        response = await registerRestaurant(form, accessToken); // 요식업 종사자 등록 API 호출
       }
 
       alert(`${userType} 등록이 완료되었습니다!`);
       console.log('등록 성공:', response);
-
-      // 성공 시 홈 화면으로 이동
-      navigate('/home');
+      navigate('/home'); // 성공 시 홈 화면으로 이동
     } catch (error) {
+      console.error(`${userType} 등록 실패:`, error.response?.data || error.message);
       alert('등록 중 오류가 발생했습니다. 다시 시도해 주세요.');
-      console.error('등록 실패:', error);
     }
   };
 
@@ -94,16 +85,16 @@ const RegisterFormPage = () => {
   };
 
   return (
-    <div>
-      <h1>
-        <span>{userType} 등록을<br /></span> 완료해 주세요
-      </h1>
-      <p>사업자 정보를 입력해 주세요</p>
-      <div>
-        <p>상호명</p>
-        <label>
-          <img src={getIcon('shopName')} alt="Shop Icon" />
-          <input
+    <Container>
+      <Header>
+        <Span>{userType} 등록을<br /></Span> 완료해 주세요
+      </Header>
+      <SubText>사업자 정보를 입력해 주세요</SubText>
+      <Form>
+        <Notice>상호명</Notice>
+        <Label isActive={activeField === 'shopName'}>
+          <Icon src={getIcon('shopName')} alt="Shop Icon" />
+          <Input
             type="text"
             name="shopName"
             placeholder="ex) 농담이네"
@@ -112,12 +103,12 @@ const RegisterFormPage = () => {
             onFocus={() => setActiveField('shopName')}
             onBlur={() => setActiveField('')}
           />
-        </label>
+        </Label>
 
-        <p>대표자 이름</p>
-        <label>
-          <img src={getIcon('representativeName')} alt="Person Icon" />
-          <input
+        <Notice>대표자 이름</Notice>
+        <Label isActive={activeField === 'representativeName'}>
+          <Icon src={getIcon('representativeName')} alt="Person Icon" />
+          <Input
             type="text"
             name="representativeName"
             placeholder="ex) 김농"
@@ -126,12 +117,12 @@ const RegisterFormPage = () => {
             onFocus={() => setActiveField('representativeName')}
             onBlur={() => setActiveField('')}
           />
-        </label>
+        </Label>
 
-        <p>고객센터(연락처)</p>
-        <label>
-          <img src={getIcon('contactNumber')} alt="Mobile Icon" />
-          <input
+        <Notice>고객센터(연락처)</Notice>
+        <Label isActive={activeField === 'contactNumber'}>
+          <Icon src={getIcon('contactNumber')} alt="Mobile Icon" />
+          <Input
             type="text"
             name="contactNumber"
             placeholder="ex) 010-1234-5678"
@@ -140,12 +131,12 @@ const RegisterFormPage = () => {
             onFocus={() => setActiveField('contactNumber')}
             onBlur={() => setActiveField('')}
           />
-        </label>
+        </Label>
 
-        <p>사업자 등록 번호</p>
-        <label>
-          <img src={getIcon('registrationNumber')} alt="Chield Check Icon" />
-          <input
+        <Notice>사업자 등록 번호</Notice>
+        <Label isActive={activeField === 'registrationNumber'}>
+          <Icon src={getIcon('registrationNumber')} alt="Chield Check Icon" />
+          <Input
             type="text"
             name="registrationNumber"
             placeholder="ex) 1234567890"
@@ -154,12 +145,12 @@ const RegisterFormPage = () => {
             onFocus={() => setActiveField('registrationNumber')}
             onBlur={() => setActiveField('')}
           />
-        </label>
+        </Label>
 
-        <p>사업자 소재지</p>
-        <label>
-          <img src={getIcon('address')} alt="Pin Icon" />
-          <input
+        <Notice>사업자 소재지</Notice>
+        <Label isActive={activeField === 'address'}>
+          <Icon src={getIcon('address')} alt="Pin Icon" />
+          <Input
             type="text"
             name="address"
             placeholder="ex) 서울시 농담구 농담로 10"
@@ -168,17 +159,21 @@ const RegisterFormPage = () => {
             onFocus={() => setActiveField('address')}
             onBlur={() => setActiveField('')}
           />
-        </label>
+        </Label>
 
-        <button disabled={!isFilled} onClick={handleSubmit}>
+        <SubmitButton isFilled={isFilled} onClick={handleSubmit}>
           등록하기
-        </button>
-      </div>
-    </div>
+        </SubmitButton>
+      </Form>
+    </Container>
   );
 };
 
 export default RegisterFormPage;
+
+// Styled-components는 기존 스타일을 유지합니다.
+
+
 
 
 

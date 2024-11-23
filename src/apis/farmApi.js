@@ -3,16 +3,18 @@ import axiosInstance from './index.js';
 // 농산물 생산자 등록 API 
 export const registerFarm = async (form, accessToken) => {
   try {
+    console.log('registrationNumber 타입:', typeof form.registrationNumber);
+    console.log('registrationNumber 값:', form.registrationNumber);
+
     const response = await axiosInstance.post(
       '/api/farms',
       {
         farmName: form.shopName,
         farmRepresentative: form.representativeName,
         phoneNumber: form.contactNumber,
+        businessRegistrationNumber: Number(form.registrationNumber), // 숫자
         businessRegistrationNumber: form.registrationNumber,
         address: form.address,
-        latitude: 0, 
-        longitude: 0,
       },
       {
         headers: {

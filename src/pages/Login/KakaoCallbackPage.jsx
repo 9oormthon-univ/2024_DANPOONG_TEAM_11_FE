@@ -126,7 +126,7 @@ export default function KakaoCallbackPage() {
               localStorage.setItem('refreshToken', refreshToken);
               console.log('토큰 저장 완료:', { accessToken, refreshToken });
               setIsLoading(false); // 로딩 상태 해제
-              navigate('/home'); // 홈으로 이동
+              navigate('/select-user'); // 홈으로 이동
             } else {
               console.error('토큰 응답에 문제가 있습니다.');
               setIsLoading(false); // 로딩 상태 해제
