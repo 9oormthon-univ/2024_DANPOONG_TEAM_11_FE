@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom'; // useNavigate 추가
 import ProductCard from "./ProductCard";
 import FilterModal from "./FilterModal";
 import FilterButton from "./FilterButton";
 import { useQuery } from "@tanstack/react-query";
 import { getSalesList } from "../../../apis/saleList.js";
 import DataLoading from "../../common/DataLoading.jsx";
+import {useNavigate} from "react-router-dom";
 
 const categories = ['전체', '과일', '고구마/감자/밤', '쌈채소', '쌀/옥수수/콩', '고추/마늘/양파', '배추/무', '홍삼/인삼/새싹삼', '오이/파', '버섯', '나물', '기타'];
 const regions = ['전체', '서울', '경기/인천', '강원', '대전/세종', '충남/충북', '경남/경북', '전남/전북', '부산', '제주'];
 
 const SalesListScreen = () => {
+    const navigate = useNavigate();
     const [selectedCategory, setSelectedCategory] = useState('전체');
     const [selectedRegion, setSelectedRegion] = useState('전체');
+
+    const [pendingCategory, setPendingCategory] = useState('전체');
+    const [pendingRegion, setPendingRegion] = useState('전체');
+
     const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const navigate = useNavigate(); // useNavigate 선언
 
     const { data, isPending, error } = useQuery({
         queryKey: ['ingredientsList', { category: selectedCategory, region: selectedRegion }],
@@ -36,6 +40,12 @@ const SalesListScreen = () => {
     }
 
     const products = data?.data?.ingredientInfoResponseDTOs || [];
+
+    const handleApplyFilter = () => {
+        setSelectedCategory(pendingCategory);
+        setSelectedRegion(pendingRegion);
+        setIsFilterOpen(false); // 모달 닫기
+    };
 
     const handleProductClick = (ingredientId) => {
         navigate(`/details/sales/${ingredientId}`);
@@ -80,20 +90,14 @@ const SalesListScreen = () => {
             {/* 필터 모달 */}
             {isFilterOpen && (
                 <FilterModal
-                    isOpen={isFilterOpen}
                     categories={categories}
                     regions={regions}
-                    selectedCategory={selectedCategory}
-                    selectedRegion={selectedRegion}
-                    onCategorySelect={(category) => {
-                        setSelectedCategory(category === selectedCategory ? '전체' : category);
-                        setIsFilterOpen(false);
-                    }}
-                    onRegionSelect={(region) => {
-                        setSelectedRegion(region === selectedRegion ? '전체' : region);
-                        setIsFilterOpen(false);
-                    }}
-                    onClose={() => setIsFilterOpen(false)}
+                    selectedCategory={pendingCategory}
+                    selectedRegion={pendingRegion}
+                    onCategorySelect={(category) => setPendingCategory(category)}
+                    onRegionSelect={(region) => setPendingRegion(region)}
+                    onApply={handleApplyFilter} // 필터 적용
+                    onClose={() => setIsFilterOpen(false)} // 모달 닫기
                 />
             )}
         </Container>
@@ -102,6 +106,7 @@ const SalesListScreen = () => {
 
 export default SalesListScreen;
 
+// 스타일링
 const Container = styled.div`
     width: 100%;
     max-width: 480px;

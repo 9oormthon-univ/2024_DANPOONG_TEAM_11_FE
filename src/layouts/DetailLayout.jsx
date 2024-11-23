@@ -12,19 +12,19 @@ export default function DetailLayout() {
         if (location.pathname.startsWith('/details/sales')) {
             const { ingredientId } = params;
             return [
-                { label: '장바구니', onClick: () => alert(`1:1 채팅 - 상품 ID: ${ingredientId}`) },
-                { label: '구매하기', onClick: () => alert(`전화하기 - 상품 ID: ${ingredientId}`) },
+                { label: '장바구니'},
+                { label: '구매하기'},
             ];
         } else if (location.pathname.startsWith('/details/seller')) {
             const { farmId } = params;
             return [
-                { label: '1:1 채팅', onClick: () => alert(`팔로우 - 판매자 ID: ${farmId}`) },
-                { label: '전화하기', onClick: () => navigate(`/sales?seller=${farmId}`) },
+                { label: '1:1 채팅', onClick: () => navigate(`/chat`) },
+                { label: '전화하기' },
             ];
         } else if (location.pathname.startsWith('/details/restaurant')) {
             const { restaurantId } = params;
             return [
-                { label: '전화로 예약하기', onClick: () => a기ert(`예약하기 - 레스토랑 ID: ${restaurantId}`) },
+                { label: '전화로 예약하기'},
             ];
         }
         return [];
