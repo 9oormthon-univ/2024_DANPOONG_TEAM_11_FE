@@ -1,17 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ProductCard = ({ product }) => (
-  <Card>
-    <ImageBox>
-      <Image src={product.image} alt={product.name} />
-    </ImageBox>
-    <Name>{product.name}</Name>
-    <Info>
-      <Weight>{product.weight}</Weight>
-    </Info>
-  </Card>
-);
+const ProductCard = ({ product }) => {
+
+    return (
+        <Card>
+            <ImageBox>
+                <Image src={product.image} alt={product.name} />
+            </ImageBox>
+            <Name>{product.name}</Name>
+            <Info>
+                <Price>1kg 당 {product.price}원</Price>
+            </Info>
+        </Card>
+    )
+};
 
 export default ProductCard;
 
@@ -52,12 +55,7 @@ const Info = styled.div`
   gap: 0.7rem;
 `;
 
-const Weight = styled.span`
-  font-size: 0.9rem;
-  border: 1px solid ${({ theme }) => theme.colors.orange};
-  border-radius: 0.5rem;
-  padding: 0.3rem 0.7rem;
-`;
+
 
 const Price = styled.span`
   font-size: 0.9rem;
