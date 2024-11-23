@@ -65,7 +65,7 @@ const RegisterFormPage = () => {
         response = await registerRestaurant(form, accessToken); // 요식업 종사자 등록 API 호출
       }
 
-      alert(`${userType} 등록이 완료되었습니다!`);
+      // alert(`${userType} 등록이 완료되었습니다!`);
       console.log('등록 성공:', response);
       navigate('/home'); // 성공 시 홈 화면으로 이동
     } catch (error) {
