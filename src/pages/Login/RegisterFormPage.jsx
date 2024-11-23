@@ -176,7 +176,6 @@ export default RegisterFormPage;
 
 
 
-
 const Container = styled.div`
   width: 100%;
   height: 100vh;
@@ -249,6 +248,9 @@ const Input = styled.input`
   ::placeholder {
     color: ${({ theme }) => theme.colors.caption2};
   }
+  &:focus {
+  background-color: #FFEFD9; 
+}
 `;
 
 const SubmitButton = styled.button`
