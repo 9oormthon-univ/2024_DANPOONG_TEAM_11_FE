@@ -3,22 +3,41 @@ import styled from "styled-components";
 import SellerIcon from "../../../assets/image/sales/SellerIcon.svg";
 import Certify from "../../../assets/image/sales/Certify.svg";
 import NotoggleSaleInfoSection from "./NotoggleSaleInfoSection.jsx";
+import {useParams} from "react-router-dom";
+import {useQuery} from "@tanstack/react-query";
+import {getFarmDetail} from "../../../apis/sellerDetail.js";
+
+const sellerData = {
+    certifications: [
+        "원산지",
+        "판매자 신분증, 연락처",
+        "사업자 등록증",
+    ],
+};
 
 const SellerDetailScreen = () => {
-    const sellerInfo = {
-        name: "전남손맛",
-        region: "전라남도",
-        quickResponse: "빠른 답장",
-        products: [
-            { name: "무안 양파", image: "https://health.chosun.com/site/data/img_dir/2024/08/13/2024081302145_0.jpg" },
-            { name: "해남 코끼리마늘", image: "https://health.chosun.com/site/data/img_dir/2024/08/13/2024081302145_0.jpg" },
-        ],
-        certifications: [
-            "원산지",
-            "판매자 신분증, 연락처",
-            "사업자 등록증",
-        ],
-    };
+
+    const { farmId } = useParams();
+
+    const { data, isPending, error } = useQuery({
+        queryKey: ['farmDetail', farmId],
+        queryFn: () => {
+            return getFarmDetail(farmId);
+        },
+        staleTime: 1000 * 60 * 5,
+        cacheTime: 1000 * 60 * 10,
+    });
+
+    if (isPending) {
+        return <div>로딩 중...</div>;
+    }
+
+    if (error) {
+        return <div>데이터를 불러오는 중 오류가 발생했습니다.</div>;
+    }
+
+    const sellerInfo = data?.data || {};
+
 
     return (
         <Box>
@@ -27,22 +46,22 @@ const SellerDetailScreen = () => {
                 <Header>
                     <SellerImage src={SellerIcon} alt="판매자 아이콘" />
                     <SellerInfo>
-                        <SellerName>{sellerInfo.name}</SellerName>
+                        <SellerName>{sellerInfo.farmName}</SellerName>
                         <Badges>
-                            <Badge>{sellerInfo.region}</Badge>
-                            <Badge>{sellerInfo.quickResponse}</Badge>
+                            <Badge>{sellerInfo.badges[2].badgeName}</Badge>
+                            <Badge>{sellerInfo.badges[1].badgeName}</Badge>
                         </Badges>
                     </SellerInfo>
                 </Header>
 
                 {/* 상품 설명 */}
                 <Section>
-                    <SectionTitle>{sellerInfo.name}님이 팔아요</SectionTitle>
+                    <SectionTitle>{sellerInfo.farmName}님이 팔아요</SectionTitle>
                     <Products>
-                        {sellerInfo.products.map((product, index) => (
+                        {sellerInfo.ingredients.map((product, index) => (
                             <ProductCard key={index}>
-                                <ProductImage src={product.image} alt={product.name} />
-                                <ProductName>{product.name}</ProductName>
+                                <ProductImage src={product.ingredientImages[0]} alt={product.name} />
+                                <ProductName>{product.ingredientName}</ProductName>
                             </ProductCard>
                         ))}
                     </Products>
@@ -52,9 +71,9 @@ const SellerDetailScreen = () => {
 
                 {/* 인증 기록 */}
                 <Section>
-                    <SectionTitle>{sellerInfo.name}님이 인증했어요</SectionTitle>
+                    <SectionTitle>{sellerInfo.farmName}님이 인증했어요</SectionTitle>
                     <CertificationList>
-                        {sellerInfo.certifications.map((cert, index) => (
+                        {sellerData.certifications.map((cert, index) => (
                             <CertificationItem key={index}>
                                 <CertifyImage src={Certify} alt="인증 아이콘" />
                                 {cert}
@@ -68,7 +87,12 @@ const SellerDetailScreen = () => {
 
             {/* 판매자 정보 */}
             <Section>
-                <NotoggleSaleInfoSection />
+                <NotoggleSaleInfoSection
+                    name={sellerInfo.farmName}
+                    address={sellerInfo.address}
+                    representative={sellerInfo.farmRepresentative}
+                    phoneNumber={sellerInfo.phoneNumber}
+                />
             </Section>
         </Box>
     );
@@ -108,7 +132,7 @@ const SellerInfo = styled.div`
 
 const SellerName = styled.h1`
     font-size: 20px;
-    font-weight: 800;
+    font-weight: 600;
     margin-bottom: 10px;
     color: #323335;
 `;
@@ -121,7 +145,7 @@ const Badges = styled.div`
 const Badge = styled.div`
     padding: 7px 13px;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 500;
     color: white;
     background-color: #FFA726;
     border-radius: 0.5rem;
@@ -134,7 +158,7 @@ const Section = styled.div`
 
 const SectionTitle = styled.h2`
     font-size: 16px;
-    font-weight: 800;
+    font-weight: 500;
     margin: 20px 0 10px;
     color: #323335;
 `;
@@ -168,7 +192,7 @@ const ProductImage = styled.img`
 const ProductName = styled.span`
     padding: 10px;
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 500;
     text-align: center;
     color: #323335;
 `;
@@ -186,7 +210,7 @@ const CertificationItem = styled.div`
     gap: 0.125rem;
     font-size: 1rem;
     color: #323335;
-    font-weight: 600;
+    font-weight: 400;
 `;
 
 const CertifyImage = styled.img`
