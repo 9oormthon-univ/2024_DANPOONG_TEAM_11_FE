@@ -6,6 +6,7 @@ import NotoggleSaleInfoSection from "./NotoggleSaleInfoSection.jsx";
 import {useParams} from "react-router-dom";
 import {useQuery} from "@tanstack/react-query";
 import {getFarmDetail} from "../../../apis/sellerDetail.js";
+import DataLoading from "../../common/DataLoading.jsx";
 
 const sellerData = {
     certifications: [
@@ -29,7 +30,11 @@ const SellerDetailScreen = () => {
     });
 
     if (isPending) {
-        return <div>로딩 중...</div>;
+        return (
+            <Container>
+                <DataLoading />
+            </Container>
+        );
     }
 
     if (error) {

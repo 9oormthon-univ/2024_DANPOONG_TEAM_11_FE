@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import chatingImage from '../../assets/image/sales/chatImage.png';
+import chatingImage from '../../assets/image/sales/chat.png';
 
 const ChatingPage = () => {
     return (

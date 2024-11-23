@@ -19,7 +19,11 @@ const RestaurantDetailScreen = () => {
     });
 
     if (isPending) {
-        return <DataLoading />;
+        return(
+            <ScreenContainer>
+                <DataLoading />
+            </ScreenContainer>
+        )
     }
 
     if (error) {

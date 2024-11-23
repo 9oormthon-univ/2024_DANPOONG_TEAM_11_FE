@@ -7,7 +7,6 @@ export default function DetailLayout() {
     const params = useParams();
     const navigate = useNavigate();
 
-    // 페이지별 버튼 구성
     const getButtons = () => {
         if (location.pathname.startsWith('/details/sales')) {
             const { ingredientId } = params;
@@ -18,7 +17,7 @@ export default function DetailLayout() {
         } else if (location.pathname.startsWith('/details/seller')) {
             const { farmId } = params;
             return [
-                { label: '1:1 채팅', onClick: () => navigate(`/chat`) },
+                { label: '1:1 채팅', onClick: () => navigate(`/register/chat`) },
                 { label: '전화하기' },
             ];
         } else if (location.pathname.startsWith('/details/restaurant')) {
