@@ -55,6 +55,7 @@ const ProductDetail = () => {
 
     const images = product?.ingredientImages || [];
 
+
     const handlePrevClick = () => {
         setCurrentImageIndex((prevIndex) =>
             prevIndex === 0 ? images.length - 1 : prevIndex - 1
@@ -67,6 +68,7 @@ const handleNextClick = () => {
         );
     };
 
+    const paragraphs = product.ingredientDescription.split("\n");
 
     return (
         <Contain>
@@ -117,7 +119,9 @@ const handleNextClick = () => {
                     <SectionQuestion>왜 못난이인가요?</SectionQuestion>
                     <SectionAnswer>{product.uglyReason}</SectionAnswer>
                     <DetailSection>
-                        <DetailText>{product.ingredientDescription}</DetailText>
+                        {paragraphs.map((paragraph, index) => (
+                            <DetailText key={index}>{paragraph}</DetailText>
+                        ))}
                     </DetailSection>
                 </DescriptionContent>
                 <HorizontalLine/>

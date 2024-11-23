@@ -41,7 +41,7 @@ const GptSection = ({ ingredientName, ingredientId }) => {
                         <DataLoading />
                     ) : (
                         <>
-                            <AnswerTitle>AI 답변</AnswerTitle>
+                            <AnswerTitle>🤖 AI 답변</AnswerTitle>
                             {paragraphs.map((paragraph, index) => (
                                 <AnswerText key={index}>{paragraph}</AnswerText>
                             ))}
