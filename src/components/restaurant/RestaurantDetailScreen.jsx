@@ -37,6 +37,7 @@ const RestaurantDetailScreen = () => {
     const image2 = secondMenu?.menuImage || 'default-second-menu-image-url'; // 이미지가 없을 경우 기본 URL
 
     const time = "매일" + restaurant.openTime + ' ~ ' + restaurant.closeTime;
+    const guideItems = restaurant.precautions.split('\n');
 
     return (
         <ScreenContainer>
@@ -60,7 +61,7 @@ const RestaurantDetailScreen = () => {
                     mainMenuImage={mainMenu.menuImage}
                     image1={image1}
                     image2={image2}
-                    guide={restaurant.precautions}
+                    guide={guideItems}
                 />
             </DetailSection>
             <RestaurantReviewSection />
