@@ -35,9 +35,13 @@
 
 | 홈 화면 | 마켓 리스트 | 채팅 & 상세 |
 |--------|-------------|-------------|
-| ![home](https://your_image_here.png) | ![market](https://your_image_here.png) | ![chat](https://your_image_here.png) |
+| ![home](<img width="1034" alt="Image" src="https://github.com/user-attachments/assets/edd224bc-4b30-4430-8bb3-4ab90fd9b787" />
+) | ![market](<img width="1025" alt="Image" src="https://github.com/user-attachments/assets/5873df74-c4b9-4c9a-a901-40461e5671ad" />
+) | ![chat](<img width="1036" alt="Image" src="https://github.com/user-attachments/assets/512c7c9f-56d9-4acd-a490-7c29446abc71" />
+) |
 
 ---
+
 
 ## 🧩 기술 스택
 
