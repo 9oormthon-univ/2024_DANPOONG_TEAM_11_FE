@@ -1,7 +1,7 @@
 # 🥕 농담: 버려질 뻔했던 농산물의 이야기
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/your_logo_here.png" alt="농담 로고" height="120"/>
+<img width="619" alt="Image" src="https://github.com/user-attachments/assets/ff556211-dc2e-4d38-8bce-4011306b3318" />
 </p>
 
 **농담은 못난이 농산물의 새로운 유통 채널을 제안합니다.**  
