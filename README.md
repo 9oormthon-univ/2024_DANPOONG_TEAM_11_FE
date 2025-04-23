@@ -33,14 +33,16 @@
 
 ## 📱 UI 미리보기
 
-| 홈 화면 | 마켓 리스트 | 채팅 & 상세 |
-|--------|-------------|-------------|
-| ![home](<img width="1034" alt="Image" src="https://github.com/user-attachments/assets/edd224bc-4b30-4430-8bb3-4ab90fd9b787" />
-) | ![market](<img width="1025" alt="Image" src="https://github.com/user-attachments/assets/5873df74-c4b9-4c9a-a901-40461e5671ad" />
-) | ![chat](<img width="1036" alt="Image" src="https://github.com/user-attachments/assets/512c7c9f-56d9-4acd-a490-7c29446abc71" />
-) |
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/edd224bc-4b30-4430-8bb3-4ab90fd9b787" width="600" alt="홈 화면" />
+</p>
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/5873df74-c4b9-4c9a-a901-40461e5671ad" width="600" alt="마켓 리스트" />
+</p>
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/512c7c9f-56d9-4acd-a490-7c29446abc71" width="600" alt="채팅 상세" />
+</p>
 
----
 
 
 ## 🧩 기술 스택
